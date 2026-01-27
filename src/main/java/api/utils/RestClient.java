@@ -1,6 +1,6 @@
-package utils;
+package api.utils;
 
-import config.Config;
+import api.config.Config;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.specification.RequestSpecification;

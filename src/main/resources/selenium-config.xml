@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <!-- Supported browserName values: Chrome, Firefox, Edge -->
+    <browserName>Firefox</browserName>
+
+    <!-- Supported web driver management: true or false -->
+    <useWebDriverManager>true</useWebDriverManager>
+
+    <!-- Supported environment URL -->
+    <environmentURL>https://demoqa.com</environmentURL>
+
+    <!-- Timeout period in seconds -->
+    <timeout>10</timeout>
+
+    <!-- Start WebDriver in Headless mode: true or false -->
+    <headlessDriver>false</headlessDriver>
+</config>
