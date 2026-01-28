@@ -1,6 +1,5 @@
 package ui.core.driver;
 
-
 import ui.core.config.SeleniumConfig;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +11,9 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DriverFactory {
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
@@ -56,8 +58,16 @@ public class DriverFactory {
 
     // --------------------------------------- PRIVATE HELPERS ----------------------------------------
 
+    Path downloadDir = config.getDownloadDir();
     private ChromeOptions setupChromeOptions() {
         ChromeOptions options = new ChromeOptions();
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downloadDir.toAbsolutePath().toString());
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("profile.default_content_settings.popups", 0);
+        prefs.put("safebrowsing.enabled", true);
+
+        options.setExperimentalOption("prefs", prefs);
         setupDriver(options);
         return options;
     }
@@ -65,13 +75,34 @@ public class DriverFactory {
     private FirefoxOptions setupFirefoxOptions() {
         FirefoxOptions options = new FirefoxOptions();
         options.addArguments("--width=1920", "--height=1080");
+        // Disable notifications
         options.addPreference("dom.webnotifications.enabled", false);
+        // Download prefs
+        options.addPreference("browser.download.folderList", 2); // 2 = custom dir
+        options.addPreference("browser.download.dir", downloadDir.toAbsolutePath().toString());
+        options.addPreference("browser.download.useDownloadDir", true);
+        // MIME types that should be downloaded automatically
+        options.addPreference(
+                "browser.helperApps.neverAsk.saveToDisk",
+                "application/pdf,application/octet-stream,application/zip,text/csv"
+        );
+
+        options.addPreference("browser.download.manager.showWhenStarting", false);
+        options.addPreference("pdfjs.disabled", true); // disable built-in PDF viewer
+
         setupDriver(options);
         return options;
     }
 
     private EdgeOptions setupEdgeOptions() {
         EdgeOptions options = new EdgeOptions();
+        Map<String, Object> prefs = new HashMap<>();
+        prefs.put("download.default_directory", downloadDir.toAbsolutePath().toString());
+        prefs.put("download.prompt_for_download", false);
+        prefs.put("profile.default_content_settings.popups", 0);
+        prefs.put("safebrowsing.enabled", true);
+
+        options.setExperimentalOption("prefs", prefs);
         options.addArguments("start-maximized", "--disable-notifications");
         setupDriver(options);
         return options;

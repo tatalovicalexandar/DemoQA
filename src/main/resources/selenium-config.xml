@@ -9,6 +9,10 @@
     <!-- Supported environment URL -->
     <environmentURL>https://demoqa.com</environmentURL>
 
+    <!-- Base directory for file downloads -->
+    <!-- Can be absolute or relative to project root -->
+    <downloadPath>target/downloads</downloadPath>
+
     <!-- Timeout period in seconds -->
     <timeout>10</timeout>
 

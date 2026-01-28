@@ -35,12 +35,13 @@ public class BasePageObject {
 
     /** Find element using given locator */
     public WebElement find(By locator) {
+        wait.waitForElementToBeClickable(locator);
         return driver.findElement(locator);
     }
 
     /** Click on element with given locator when it's visible - By */
     public void click(By locator) {
-        wait.waitForElementToBeClickable(locator);
+        //wait.waitForElementToBeClickable(locator);
         find(locator).click();
     }
 

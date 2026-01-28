@@ -7,9 +7,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class SeleniumConfig {
     private static SeleniumConfig instance;
+
+    private SeleniumConfig() { }
 
     // Public method to get the single instance of the class
     public static SeleniumConfig getInstance() {
@@ -30,6 +35,7 @@ public class SeleniumConfig {
     public String getEnvironmentURL() {
         return getConfigValue(configFile, "environmentURL");
     }
+    public String getDownloadPath() { return getConfigValue(configFile, "downloadPath"); }
     public String getTimeout() {
         return getConfigValue(configFile, "timeout");
     }
@@ -53,5 +59,28 @@ public class SeleniumConfig {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public Path getDownloadDir() {
+        // Base path from XML
+        String base = getDownloadPath();
+
+        if (base == null || base.isBlank()) {
+            throw new RuntimeException("downloadPath is not defined in selenium-config.xml");
+        }
+
+        Path path = Paths.get(
+                System.getProperty("user.dir"),
+                base,
+                String.valueOf(Thread.currentThread().getId())
+        );
+
+        try {
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot create download directory: " + path, e);
+        }
+
+        return path.toAbsolutePath();
     }
 }
