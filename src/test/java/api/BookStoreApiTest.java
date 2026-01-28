@@ -3,11 +3,12 @@ package api;
 import api.clients.AuthClient;
 import api.clients.RestClient;
 import api.endpoints.BookStoreEndpoints;
+import api.helpers.BookStoreApiHelper;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static org.hamcrest.Matchers.*;
 
-public class BookStoreE2ETest {
+public class BookStoreApiTest {
     private String username;
     private String password;
     private String token;
@@ -64,6 +65,8 @@ public class BookStoreE2ETest {
 
     @Test
     public void updateBook() {
+        BookStoreApiHelper.addBookToUser(token, userId, isbn);
+
         String targetIsbn = "9781449337711";
 
         String jsonBody = """
@@ -87,6 +90,8 @@ public class BookStoreE2ETest {
 
     @Test
     public void deleteBookFromUser() {
+        BookStoreApiHelper.addBookToUser(token, userId, isbn);
+
         RestClient.specWithAuth(token)
                 .delete(BookStoreEndpoints.BOOK_BY_ISBN + "?ISBN=" + isbn)
                 .then()

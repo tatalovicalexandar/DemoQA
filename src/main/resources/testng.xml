@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="DemoQA Test Suite" verbose="1" parallel="false">
+    <!-- API tests group (Run all tests from the package `api`) -->
+    <test name="API Tests">
+        <packages>
+            <package name="api"/>
+        </packages>
+    </test>
+
+    <!-- UI tests group (Run all tests from the package `ui`) -->
+    <test name="UI Tests">
+        <packages>
+            <package name="ui.uploaddownload"/>
+            <package name="ui.webtables"/>
+        </packages>
+    </test>
+</suite>
