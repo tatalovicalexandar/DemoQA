@@ -16,8 +16,7 @@ public class BasePageObject {
     protected WebDriver driver;
     protected WaitUtils wait;
     protected Logger log;
-    //protected String environmentURL;
-
+    protected String environmentURL;
     SeleniumConfig config = SeleniumConfig.getInstance();
     //String environmentURL = config.getEnvironmentURL();
 
@@ -25,11 +24,14 @@ public class BasePageObject {
         this.driver = DriverFactory.getDriver();
         this.wait = new WaitUtils();
         this.log = LogManager.getLogger(this.getClass());
-        //this.environmentURL = config.getEnvironmentURL();
+        this.environmentURL = config.getEnvironmentURL();
     }
 
     /** Open page with given URL */
     public void openUrl(String url) { driver.get(url); }
+
+    /** Open page with URL from Selenium Config file */
+    public void openUrlFromConfig() { driver.get(environmentURL); }
 
     /** Find element using given locator */
     public WebElement find(By locator) {

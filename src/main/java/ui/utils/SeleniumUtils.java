@@ -12,7 +12,6 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 public class SeleniumUtils {
-
     protected WebDriver driver;
     protected WaitUtils waitUtils;
     protected String testName;
@@ -30,8 +29,8 @@ public class SeleniumUtils {
         //System.out.println("Browser: " + this.browserName);
 
         DriverFactory factory = new DriverFactory(browser);
-        // ThreadLocal driver inside factory
-        driver = factory.createDriver();
+        factory.createDriver();
+        driver = factory.getDriver();
 
         // Initialize WaitUtils with the driver
         waitUtils = new WaitUtils();
