@@ -1,4 +1,4 @@
-package api.utils;
+package api.clients;
 
 import api.config.Config;
 import io.restassured.RestAssured;
@@ -34,4 +34,10 @@ public class RestClient {
         if (template == null) return "";
         return template;
     }
+
+    public static RequestSpecification specWithAuth(String token) {
+        return RestClient.spec()
+                .header("Authorization", "Bearer " + token);
+    }
+
 }
