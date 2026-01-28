@@ -1,4 +1,4 @@
-# BookStore UI & API Test Framework (RestAssured + Selenium + TestNG)
+# BookStore UI & API Test Framework (Selenium + TestNG + RestAssured)
 
 Short description
 -----------------
